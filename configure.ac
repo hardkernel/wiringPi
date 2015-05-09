@@ -12,6 +12,19 @@ AC_SUBST(libwiringPiDev_la_version, 2:0:0)
 # install locations for headers
 AC_SUBST(includedir,"${includedir}/wiringPi")
 
+# allow the user to set suid
+AC_ARG_ENABLE([suid],
+    [AS_HELP_STRING(
+        [--enable-suid],
+        ["make the gpio binary suid [default=no]"]
+    )],
+    [case "${enableval}" in
+        yes) enable_suid=true;;
+        no)  enable_suid=false;;
+        *) AC_MSG_ERROR([bad value ${enableval} for --enable-suid]) ;;
+    esac],[enable_suid=false])
+AM_CONDITIONAL([WITH_SUID], [test x$enable_suid = xtrue])
+
 AC_CONFIG_MACRO_DIR([m4])
 
 LT_INIT([disable-static])
