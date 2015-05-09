@@ -1,10 +1,10 @@
 if BUILD_DEVLIB
-	DEVLIB_DIR = devLib
-	DEVLIB_PC  = wiringPiDev.pc
+DEVLIB_DIR = devLib
+DEVLIB_PC  = wiringPiDev.pc
 endif
 
 if BUILD_GPIO
-	GPIO_DIR = gpio
+GPIO_DIR = gpio
 endif
 
 SUBDIRS = wiringPi $(DEVLIB_DIR) $(GPIO_DIR)
