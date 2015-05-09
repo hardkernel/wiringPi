@@ -34,3 +34,7 @@ stamp-h1
 *.lo
 *.gcno
 *.gcda
+
+# allow Makefile.in in examples dir!
+!examples/Makefile.in
+!examples/*/Makefile.in
