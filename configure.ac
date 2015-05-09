@@ -19,9 +19,9 @@ AC_ARG_ENABLE([devlib],
         [disable building of the device library]
     )],
     [build_devlib=${enableval}],
-    [build_devlib=true]
+    [build_devlib=yes]
 )
-AM_CONDITIONAL([BUILD_DEVLIB], [test x$build_devlib = xtrue])
+AM_CONDITIONAL([BUILD_DEVLIB], [test x$build_devlib = xyes])
 
 AC_ARG_ENABLE([gpio-tool],
     [AS_HELP_STRING(
@@ -29,18 +29,18 @@ AC_ARG_ENABLE([gpio-tool],
         [disable building of the gpio tool]
     )],
     [build_gpio=${enableval}],
-    [build_gpio=true]
+    [build_gpio=yes]
 )
 
 ## check for devlib if gpio should be build
-if test x$build_gpio = xtrue ; then
-    if test x$build_devlib != xtrue ; then
+if test x$build_gpio = xyes ; then
+    if test x$build_devlib != xyes ; then
         AC_MSG_WARN([devlib not enabled, disabling gpio])
-        build_gpio=false
+        build_gpio=no
     fi
 fi
 
-AM_CONDITIONAL([BUILD_GPIO], [test x$build_gpio = xtrue])
+AM_CONDITIONAL([BUILD_GPIO], [test x$build_gpio = xyes])
 
 # allow the user to set suid
 AC_ARG_ENABLE([suid],
