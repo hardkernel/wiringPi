@@ -1,0 +1,5 @@
+== INSTALL ==
+* run `autoreconf -i`
+* use `./configure` to configure your build
+* run `make` to build the libraries and binaries
+* run `make install` to install all
