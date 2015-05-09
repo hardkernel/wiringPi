@@ -16,7 +16,7 @@ AC_SUBST(includedir,"${includedir}/wiringPi")
 AC_ARG_ENABLE([suid],
     [AS_HELP_STRING(
         [--enable-suid],
-        ["make the gpio binary suid [default=no]"]
+        [make the gpio binary suid [default=no]]
     )],
     [case "${enableval}" in
         yes) enable_suid=true;;
