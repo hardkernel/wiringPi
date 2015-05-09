@@ -12,6 +12,36 @@ AC_SUBST(libwiringPiDev_la_version, 2:0:0)
 # install locations for headers
 AC_SUBST(includedir,"${includedir}/wiringPi")
 
+
+AC_ARG_ENABLE([devlib],
+    [AS_HELP_STRING(
+        [--disable-devlib],
+        [disable building of the device library]
+    )],
+    [build_devlib=${enableval}],
+    [build_devlib=true]
+)
+AM_CONDITIONAL([BUILD_DEVLIB], [test x$build_devlib = xtrue])
+
+AC_ARG_ENABLE([gpio-tool],
+    [AS_HELP_STRING(
+        [--disable-gpio-tool],
+        [disable building of the gpio tool]
+    )],
+    [build_gpio=${enableval}],
+    [build_gpio=true]
+)
+
+## check for devlib if gpio should be build
+if test x$build_gpio = xtrue ; then
+    if test x$build_devlib != xtrue ; then
+        AC_MSG_WARN([devlib not enabled, disabling gpio])
+        build_gpio=false
+    fi
+fi
+
+AM_CONDITIONAL([BUILD_GPIO], [test x$build_gpio = xtrue])
+
 # allow the user to set suid
 AC_ARG_ENABLE([suid],
     [AS_HELP_STRING(
