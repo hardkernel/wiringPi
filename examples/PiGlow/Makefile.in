@@ -22,19 +22,22 @@
 #    along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
 #################################################################################
 
+prefix  = @prefix@
+exec_prefix = @exec_prefix@
 
 #DEBUG	= -g -O0
 DEBUG	= -O3
 CC	= gcc
-INCLUDE	= -I/usr/local/include
+INCLUDE	= -I@includedir@
 CFLAGS	= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
 
-LDFLAGS	= -L/usr/local/lib
+LDFLAGS	= -L@libdir@
 LDLIBS    = -lwiringPi -lwiringPiDev -lpthread -lm
 
+# Should not alter anything below this line
 ###############################################################################
 
-SRC	=	blink.c button.c blink-io.c volts.c bright.c
+SRC	=	piGlow0.c piGlow1.c piglow.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -42,26 +45,17 @@ BINS	=	$(SRC:.c=)
 
 all:	$(BINS)
 
-blink:	blink.o
+piGlow0:	piGlow0.o
 	@echo [link]
-	@$(CC) -o $@ blink.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ piGlow0.o $(LDFLAGS) $(LDLIBS)
 
-blink-io:	blink-io.o
+piGlow1:	piGlow1.o
 	@echo [link]
-	@$(CC) -o $@ blink-io.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ piGlow1.o $(LDFLAGS) $(LDLIBS)
 
-button:	button.o
+piglow:	piglow.o
 	@echo [link]
-	@$(CC) -o $@ button.o $(LDFLAGS) $(LDLIBS)
-
-volts:	volts.o
-	@echo [link]
-	@$(CC) -o $@ volts.o $(LDFLAGS) $(LDLIBS)
-
-bright:	bright.o
-	@echo [link]
-	@$(CC) -o $@ bright.o $(LDFLAGS) $(LDLIBS)
-
+	@$(CC) -o $@ piglow.o $(LDFLAGS) $(LDLIBS)
 
 .c.o:
 	@echo [CC] $<
@@ -74,6 +68,12 @@ clean:
 tags:	$(SRC)
 	@echo [ctags]
 	@ctags $(SRC)
+
+install:	piglow
+	@echo Installing piglow into /usr/local/bin
+	@cp -a piglow /usr/local/bin/piglow
+	@chmod 755 /usr/local/bin/piglow
+	@echo Done. Remember to load the I2C drivers!
 
 depend:
 	makedepend -Y $(SRC)

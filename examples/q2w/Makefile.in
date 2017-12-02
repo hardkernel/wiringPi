@@ -3,7 +3,7 @@
 #	wiringPi - Wiring Compatable library for the Raspberry Pi
 #	https://projects.drogon.net/wiring-pi
 #
-#	Copyright (c) 2012 Gordon Henderson
+#	Copyright (c) 2012-2013 Gordon Henderson
 #################################################################################
 # This file is part of wiringPi:
 #	Wiring Compatable library for the Raspberry Pi
@@ -22,20 +22,21 @@
 #    along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
 #################################################################################
 
+prefix  = @prefix@
+exec_prefix = @exec_prefix@
 
 #DEBUG	= -g -O0
 DEBUG	= -O3
 CC	= gcc
-INCLUDE	= -I/usr/local/include
+INCLUDE	= -I@includedir@
 CFLAGS	= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
 
-LDFLAGS	= -L/usr/local/lib
+LDFLAGS	= -L@libdir@
 LDLIBS    = -lwiringPi -lwiringPiDev -lpthread -lm
 
-# Should not alter anything below this line
 ###############################################################################
 
-SRC	=	blink.c buttons.c reaction.c ladder.c metro.c motor.c
+SRC	=	blink.c button.c blink-io.c volts.c bright.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -47,25 +48,22 @@ blink:	blink.o
 	@echo [link]
 	@$(CC) -o $@ blink.o $(LDFLAGS) $(LDLIBS)
 
-buttons:	buttons.o
+blink-io:	blink-io.o
 	@echo [link]
-	@$(CC) -o $@ buttons.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ blink-io.o $(LDFLAGS) $(LDLIBS)
 
-reaction:	reaction.o
+button:	button.o
 	@echo [link]
-	@$(CC) -o $@ reaction.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ button.o $(LDFLAGS) $(LDLIBS)
 
-ladder:	ladder.o
+volts:	volts.o
 	@echo [link]
-	@$(CC) -o $@ ladder.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ volts.o $(LDFLAGS) $(LDLIBS)
 
-metro:	metro.o
+bright:	bright.o
 	@echo [link]
-	@$(CC) -o $@ metro.o $(LDFLAGS) $(LDLIBS)
+	@$(CC) -o $@ bright.o $(LDFLAGS) $(LDLIBS)
 
-motor:	motor.o
-	@echo [link]
-	@$(CC) -o $@ motor.o $(LDFLAGS) $(LDLIBS)
 
 .c.o:
 	@echo [CC] $<

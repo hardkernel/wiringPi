@@ -23,13 +23,16 @@
 #################################################################################
 
 
+prefix  = @prefix@
+exec_prefix = @exec_prefix@
+
 #DEBUG	= -g -O0
 DEBUG	= -O3
 CC	= gcc
-INCLUDE	= -I/usr/local/include
+INCLUDE	= -I@includedir@
 CFLAGS	= $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
 
-LDFLAGS	= -L/usr/local/lib
+LDFLAGS	= -L@libdir@
 LDLIBS    = -lwiringPi -lwiringPiDev -lpthread -lm
 
 # Should not alter anything below this line
