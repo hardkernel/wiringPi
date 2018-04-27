@@ -17,6 +17,8 @@ accepted to Github....
 Please see
 
   http://wiringpi.com/
+  
+  Documentation for installing this repo on ODROIDs is found in the ODROID wiki. Please see https://wiki.odroid.com/ and select the appropriate board model from the list.
 
 for the official documentation, etc. and the best way to submit bug reports, etc.
 is by sending an email to projects@drogon.net
