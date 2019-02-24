@@ -112,6 +112,8 @@ static pthread_mutex_t pinMutex ;
 int wiringPiDebug       = FALSE ;
 int wiringPiReturnCodes = FALSE ;
 
+extern void delay (unsigned int howLong) ;
+
 // ODROID Wiring Library
 struct libodroid	libwiring;
 

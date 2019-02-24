@@ -749,7 +749,7 @@ static int doExtensionDrcS (char *progName, int pinBase, char *params)
   return TRUE ;
 }
 
-
+#if !defined ANDROID
 /*
  * doExtensionDrcNet:
  *	Interface to a DRC Network system
@@ -802,7 +802,7 @@ static int doExtensionDrcNet (char *progName, int pinBase, char *params)
   return drcSetupNet (pinBase, pins, ipAddress, port, password) ;
 }
 
-
+#endif
 
 /*
  * Function list
@@ -820,7 +820,9 @@ static struct extensionFunctionStruct extensionFunctions [] =
   { "pcf8574",		&doExtensionPcf8574	},
   { "pcf8591",		&doExtensionPcf8591	},
   { "bmp180",		&doExtensionBmp180	},
+#if !defined ANDROID
   { "pseudoPins",	&doExtensionPseudoPins	},
+#endif
   { "htu21d",		&doExtensionHtu21d	},
   { "ds18b20",		&doExtensionDs18b20	},
   { "mcp3002",		&doExtensionMcp3002	},
@@ -832,7 +834,9 @@ static struct extensionFunctionStruct extensionFunctions [] =
   { "max5322",		&doExtensionMax5322	},
   { "sn3218",		&doExtensionSn3218	},
   { "drcs",		&doExtensionDrcS	},
+#if !defined ANDROID
   { "drcn",		&doExtensionDrcNet	},
+#endif
   { NULL,		NULL		 	},
 } ;
 
