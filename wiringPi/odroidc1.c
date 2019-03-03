@@ -664,7 +664,11 @@ static void init_gpio_mmap (void)
 		msg(MSG_ERR, "wiringPiSetup: Cannot open memory area for GPIO use. \n");
 	} else {
 		// #define C1_GPIO_BASE	0xC1108000
+#ifdef ANDROID
+		mapped = mmap64(0, BLOCK_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, (off64_t)C1_GPIO_BASE);
+#else
 		mapped = mmap(0, BLOCK_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, C1_GPIO_BASE);
+#endif
 
 		if (mapped == MAP_FAILED)
 			msg(MSG_ERR, "wiringPiSetup: mmap (GPIO) failed: %s \n", strerror (errno));
