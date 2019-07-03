@@ -316,159 +316,159 @@ static int _getAlt (int pin)
 	case C1_GPIOX_PIN_START  ...C1_GPIOX_PIN_END:
 		switch (shift) {
 		case	0:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 5))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 14))		mode = 2;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 5))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 14))	 { mode = 2; break; }
 			break;
 		case	1:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 4))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))		mode = 2;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 4))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))	 { mode = 2; break; }
 			break;
 		case	2:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 3))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))		mode = 2;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 3))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))	 { mode = 2; break; }
 			break;
 		case	3:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 2))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))		mode = 2;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 2))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 13))	 { mode = 2; break; }
 			break;
 		case	4:
 			if ((*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 29)) &&
-			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12)))	mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 30))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 17))		mode = 3;	break;
+			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12))) { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 30))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 17))	 { mode = 3; break; }
 			break;
 		case	5:
 			if ((*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 28)) &&
-			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12)))	mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 29))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 16))		mode = 3;	break;
+			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12))) { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 29))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 16))	 { mode = 3; break; }
 			break;
 		case	6:
 			if ((*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 28)) &&
-			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12)))	mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 27))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 15))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 9))		mode = 4;	break;
+			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12))) { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 27))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 15))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 9))	 { mode = 4; break; }
 			break;
 		case	7:
 			if ((*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 28)) &&
-			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12)))	mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 27))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 14))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 8))		mode = 4;	break;
+			    (*(gpio + C1_MUX_REG_5_OFFSET) & (1 << 12))) { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 27))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 14))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 8))	 { mode = 4; break; }
 			break;
 		case	8:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 1))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 11))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 19))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 22))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 6))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 1))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 11))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 19))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 22))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 6))	 { mode = 5; break; }
 			break;
 		case	9:
-			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 0))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 10))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 18))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 24))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 6))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_8_OFFSET) & (1 << 0))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 10))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 18))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 24))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 6))	 { mode = 5; break; }
 			break;
 		case	10:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 22))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 22))	 { mode = 1; break; }
 			if ((*(gpio + C1_MUX_REG_7_OFFSET) & (1 << 31)) &&
-			    (*(gpio + C1_MUX_REG_9_OFFSET) & (1 << 19)))	mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 17))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 23))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 8))		mode = 5;	break;
+			    (*(gpio + C1_MUX_REG_9_OFFSET) & (1 << 19))) { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 17))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 23))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 8))	 { mode = 5; break; }
 			break;
 		case	11:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 20))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_7_OFFSET) & (1 << 30))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_2_OFFSET) & (1 << 3))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 20))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_7_OFFSET) & (1 << 30))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_2_OFFSET) & (1 << 3))	 { mode = 5; break; }
 			break;
 		case	16:
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 9))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 21))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 5))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 9))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 21))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 5))	 { mode = 5; break; }
 			break;
 		case	17:
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 8))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 20))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 4))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 8))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 20))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 4))	 { mode = 5; break; }
 			break;
 		case	18:
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 7))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 19))		mode = 4;	break;
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 7))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 19))	 { mode = 4; break; }
 			break;
 		case	19:
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 6))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 18))		mode = 4;	break;
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 6))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 18))	 { mode = 4; break; }
 			break;
 		case	20:
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 16))		mode = 3;	break;
-			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 25))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 9))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 16))	 { mode = 3; break; }
+			if (*(gpio  + C1_MUX_REG_4_OFFSET) & (1 << 25))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 9))	 { mode = 5; break; }
 			break;
 		}
 		break;
 	case C1_GPIOY_PIN_START  ...C1_GPIOY_PIN_END:
 		switch (shift) {
 		case	0:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 2))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 2))	 { mode = 1; break; }
 			break;
 		case	1:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 1))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 1))	 { mode = 1; break; }
 			break;
 		case	3:
-			if (*(gpio  + C1_MUX_REG_1_OFFSET) & (1 << 7))		mode = 2;	break;
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 18))		mode = 3;	break;
+			if (*(gpio  + C1_MUX_REG_1_OFFSET) & (1 << 7))	 { mode = 2; break; }
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 18))	 { mode = 3; break; }
 			break;
 		case	6:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
 			break;
 		case	7:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
 			break;
 		case	8:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 0))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 0))	 { mode = 1; break; }
 			break;
 		case	9:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 4))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 4))	 { mode = 1; break; }
 			break;
 		case	10:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
 			break;
 		case	11:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
 			break;
 		case	12:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
 			break;
 		case	13:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 7))		mode = 3;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 7))	 { mode = 3; break; }
 			break;
 		case	14:
-			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))		mode = 1;	break;
-			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 6))		mode = 3;	break;
+			if (*(gpio  + C1_MUX_REG_3_OFFSET) & (1 << 5))	 { mode = 1; break; }
+			if (*(gpio  + C1_MUX_REG_5_OFFSET) & (1 << 6))	 { mode = 3; break; }
 			break;
 		}
 		break;
 	case C1_GPIODV_PIN_START...C1_GPIODV_PIN_END:
 		switch (shift) {
 		case	24:
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 23))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 31))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 23))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 31))	 { mode = 5; break; }
 			break;
 		case	25:
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 22))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 30))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 22))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 30))	 { mode = 5; break; }
 			break;
 		case	26:
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 21))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 29))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 21))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 29))	 { mode = 5; break; }
 			break;
 		case	27:
-			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 20))		mode = 4;	break;
-			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 28))		mode = 5;	break;
+			if (*(gpio  + C1_MUX_REG_6_OFFSET) & (1 << 20))	 { mode = 4; break; }
+			if (*(gpio  + C1_MUX_REG_9_OFFSET) & (1 << 28))	 { mode = 5; break; }
 			break;
 		}
 		break;
