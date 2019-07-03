@@ -286,10 +286,10 @@ static void _pinMode (int pin, int mode)
 		*(gpio + fsel) = (*(gpio + fsel) & ~(1 << shift));
 	break;
 	case	SOFT_PWM_OUTPUT:
-		softPwmCreate (pin, 0, 100);
+		softPwmCreate (origPin, 0, 100);
 	break;
 	case	SOFT_TONE_OUTPUT:
-		softToneCreate (pin);
+		softToneCreate (origPin);
 	break;
 	default:
 		msg(MSG_WARN, "%s : Unknown Mode %d\n", __func__, mode);
