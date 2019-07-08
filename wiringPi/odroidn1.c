@@ -88,7 +88,7 @@ static const int phyToGpio[64] = {
 //
 /*----------------------------------------------------------------------------*/
 /* ADC file descriptor */
-static char *adcFds[2];
+static int adcFds[2];
 
 /* GPIO mmap control. Actual GPIO bank number. */
 static volatile uint32_t *gpio[5];
@@ -353,10 +353,10 @@ static void _pullUpDnControl (int pin, int pud)
 	uint8_t	bank, group;
 
 	if (lib->mode == MODE_GPIO_SYS)
-		return	0;
+		return;
 
 	if ((pin = _getModeToGpio(lib->mode, pin)) < 0)
-		return	2;
+		return;
 
 	bank	= pin / 32;
 	group	= (pin - bank * 32) / 8;
@@ -548,7 +548,7 @@ static int _analogRead (int pin)
 	lseek (adcFds [pin], 0L, SEEK_SET);
 	read  (adcFds [pin], &value[0], 4);
 
-	return	atoi(value);
+	return	atoi((const char*)value);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -642,19 +642,25 @@ static void init_gpio_mmap (void)
 
 	/* GPIO mmap setup */
 	if (!getuid()) {
-		if ((fd = open ("/dev/mem", O_RDWR | O_SYNC | O_CLOEXEC) ) < 0)
-			return msg (MSG_ERR,
+		if ((fd = open ("/dev/mem", O_RDWR | O_SYNC | O_CLOEXEC) ) < 0) {
+			msg (MSG_ERR,
 				"wiringPiSetup: Unable to open /dev/mem: %s\n",
 				strerror (errno));
+			return;
+		}
 	} else {
 		if (access("/dev/gpiomem",0) == 0) {
-			if ((fd = open ("/dev/gpiomem", O_RDWR | O_SYNC | O_CLOEXEC) ) < 0)
-				return msg (MSG_ERR,
+			if ((fd = open ("/dev/gpiomem", O_RDWR | O_SYNC | O_CLOEXEC) ) < 0) {
+				msg (MSG_ERR,
 					"wiringPiSetup: Unable to open /dev/gpiomem: %s\n",
 					strerror (errno));
-		} else
-			return msg (MSG_ERR,
+				return;
+			}
+		} else {
+			msg (MSG_ERR,
 				"wiringPiSetup: /dev/gpiomem doesn't exist. Please try again with sudo.\n");
+			return;
+		}
 	}
 
 	// GPIO{0, 1}
@@ -703,15 +709,17 @@ static void init_gpio_mmap (void)
 				MAP_SHARED, fd, N1_GPIO_3_BASE) ;
 
 	if (((int32_t)cru[0] == -1) || ((int32_t)cru[1] == -1)) {
-		return msg (MSG_ERR,
+		msg (MSG_ERR,
 			"wiringPiSetup: mmap (CRU) failed: %s\n",
 			strerror (errno));
+		return;
 	}
 
 	if (((int32_t)grf[0] == -1) || ((int32_t)grf[1] == -1)) {
-		return msg (MSG_ERR,
+		msg (MSG_ERR,
 			"wiringPiSetup: mmap (GRF) failed: %s\n",
 			strerror (errno));
+		return;
 	}
 
 	if (	((int32_t)gpio[0] == -1) ||
@@ -719,7 +727,7 @@ static void init_gpio_mmap (void)
 		((int32_t)gpio[2] == -1) ||
 		((int32_t)gpio[3] == -1) ||
 		((int32_t)gpio[4] == -1)) {
-		return msg (MSG_ERR,
+		msg (MSG_ERR,
 			"wiringPiSetup: mmap (GPIO) failed: %s\n",
 			strerror (errno));
 	}
