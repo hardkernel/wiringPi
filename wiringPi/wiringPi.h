@@ -103,7 +103,9 @@ extern const char *piMakerNames    [16];
 extern const int   piMemorySize    [ 8];
 
 /*----------------------------------------------------------------------------*/
+#if !defined(ANDROID)
 #define	PAGE_SIZE		(4*1024)
+#endif
 #define	BLOCK_SIZE		(4*1024)
 
 /*----------------------------------------------------------------------------*/
