@@ -176,7 +176,7 @@ static void warn_msg(const char *func)
 // Unsupport Function list on ODROIDs
 //
 /*----------------------------------------------------------------------------*/
-static 	void piGpioLayoutOops	(const char UNU *why)	{ warn_msg(__func__); return; }
+static 	void UNU piGpioLayoutOops	(const char UNU *why)	{ warn_msg(__func__); return; }
 	void pwmSetMode		(int UNU mode)		{ warn_msg(__func__); return; }
 	void pwmSetRange	(unsigned int UNU range)	{ warn_msg(__func__); return; }
 	void pwmSetClock	(int UNU divisor)		{ warn_msg(__func__); return; }
@@ -199,8 +199,8 @@ struct wiringPiNodeStruct *wiringPiFindNode (int UNU pin) {	return NULL; }
 
 static		void pinModeDummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int mode)  { return ; }
 static		void pullUpDnControlDummy	(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int pud)   { return ; }
-static	unsigned int digitalRead8Dummy		(UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return 0 ; }
-static		void digitalWrite8Dummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
+static	unsigned int UNU digitalRead8Dummy		(UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return 0 ; }
+static		void UNU digitalWrite8Dummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static		int  digitalReadDummy		(UNU struct wiringPiNodeStruct *node, UNU int UNU pin)            { return LOW ; }
 static		void digitalWriteDummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
 static		void pwmWriteDummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int value) { return ; }
@@ -468,8 +468,6 @@ void setPadDrive (int pin, int value)
 {
 	if (libwiring.setPadDrive)
 		return	libwiring.setPadDrive(pin, value);
-
-	return	-1;
 }
 
 /*----------------------------------------------------------------------------*/

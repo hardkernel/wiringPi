@@ -462,7 +462,7 @@ static int doExtensionPcf8591 (char *progName, int pinBase, char *params)
  *********************************************************************************
  */
 
-static int doExtensionPseudoPins (UNU char *progName, int pinBase, UNU char *params)
+static int UNU doExtensionPseudoPins (UNU char *progName, int pinBase, UNU char *params)
 {
   pseudoPinsSetup (pinBase) ;
 
