@@ -176,18 +176,18 @@ static void warn_msg(const char *func)
 // Unsupport Function list on ODROIDs
 //
 /*----------------------------------------------------------------------------*/
-static 	void piGpioLayoutOops	(const char *why)	{ warn_msg(__func__); return; }
-	void pwmSetMode		(int mode)		{ warn_msg(__func__); return; }
-	void pwmSetRange	(unsigned int range)	{ warn_msg(__func__); return; }
-	void pwmSetClock	(int divisor)		{ warn_msg(__func__); return; }
-	void gpioClockSet	(int pin, int freq)	{ warn_msg(__func__); return; }
+static 	void piGpioLayoutOops	(const char UNU *why)	{ warn_msg(__func__); return; }
+	void pwmSetMode		(int UNU mode)		{ warn_msg(__func__); return; }
+	void pwmSetRange	(unsigned int UNU range)	{ warn_msg(__func__); return; }
+	void pwmSetClock	(int UNU divisor)		{ warn_msg(__func__); return; }
+	void gpioClockSet	(int UNU pin, int UNU freq)	{ warn_msg(__func__); return; }
 
 	/* core unsupport function */
-	void pinModeAlt		(int pin, int mode)	{ warn_msg(__func__); return; }
-	void pwmWrite		(int pin, int value)	{ warn_msg(__func__); return; }
-	void analogWrite	(int pin, int value)	{ warn_msg(__func__); return; }
-	void pwmToneWrite	(int pin, int freq)	{ warn_msg(__func__); return; }
-	void digitalWriteByte2	(const int value)	{ warn_msg(__func__); return; }
+	void pinModeAlt		(int UNU pin, int UNU mode)	{ warn_msg(__func__); return; }
+	void pwmWrite		(int UNU pin, int UNU value)	{ warn_msg(__func__); return; }
+	void analogWrite	(int UNU pin, int UNU value)	{ warn_msg(__func__); return; }
+	void pwmToneWrite	(int UNU pin, int UNU freq)	{ warn_msg(__func__); return; }
+	void digitalWriteByte2	(const int UNU value)	{ warn_msg(__func__); return; }
 	unsigned int digitalReadByte2 (void)		{ warn_msg(__func__); return -1; }
 /*----------------------------------------------------------------------------*/
 // Extend wiringPi with other pin-based devices and keep track of
@@ -195,7 +195,7 @@ static 	void piGpioLayoutOops	(const char *why)	{ warn_msg(__func__); return; }
 /*----------------------------------------------------------------------------*/
 struct wiringPiNodeStruct *wiringPiNodes = NULL ;
 
-struct wiringPiNodeStruct *wiringPiFindNode (int pin) {	return NULL; }
+struct wiringPiNodeStruct *wiringPiFindNode (int UNU pin) {	return NULL; }
 
 static		void pinModeDummy		(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int mode)  { return ; }
 static		void pullUpDnControlDummy	(UNU struct wiringPiNodeStruct *node, UNU int pin, UNU int pud)   { return ; }

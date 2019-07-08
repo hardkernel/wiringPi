@@ -183,7 +183,7 @@ static void checkDevTree (char *argv [])
 	}
 }
 
-static void doLoad (int argc, char *argv [])
+static void doLoad (int UNU argc, char *argv [])
 {
 	checkDevTree (argv) ;
 }
@@ -194,7 +194,7 @@ static void doLoad (int argc, char *argv [])
  *	Un-Load either the spi or i2c modules and change device ownerships, etc.
  *********************************************************************************
  */
-static void doUnLoad (int argc, char *argv [])
+static void doUnLoad (int UNU argc, char *argv [])
 {
 	checkDevTree (argv) ;
 }
@@ -725,7 +725,7 @@ static void doWrite (int argc, char *argv [])
  *********************************************************************************
  */
 
-static void doAwrite (int argc, char *argv [])
+static void UNU doAwrite (int argc, char *argv [])
 {
 	int pin, val ;
 
@@ -937,12 +937,12 @@ void doPwm (int argc, char *argv [])
  *********************************************************************************
  */
 
-static void doPwmMode (int mode)
+static void UNU doPwmMode (int mode)
 {
 	pwmSetMode (mode) ;
 }
 
-static void doPwmRange (int argc, char *argv [])
+static void UNU doPwmRange (int argc, char *argv [])
 {
 	unsigned int range ;
 
@@ -960,7 +960,7 @@ static void doPwmRange (int argc, char *argv [])
 	pwmSetRange (range) ;
 }
 
-static void doPwmClock (int argc, char *argv [])
+static void UNU doPwmClock (int argc, char *argv [])
 {
 	unsigned int clock ;
 
@@ -983,7 +983,7 @@ static void doPwmClock (int argc, char *argv [])
  *	function is not support by ODROID Board.
  *********************************************************************************
  */
-static void doNothing (int argc, char *argv [])
+static void doNothing (int UNU argc, char *argv [])
 {
 	fprintf(stderr, "warn : (%s) : This function is not supported by ODROID Board.\n",
 		argv[1]);

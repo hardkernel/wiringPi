@@ -267,17 +267,17 @@ extern		int  wpiPinToGpio	(int wpiPin);
 extern		int  physPinToGpio	(int physPin);
 
 // Unsupported
-extern		void pinModeAlt		(int pin, int mode);
-extern		void analogWrite	(int pin, int value);
-extern		void pwmToneWrite	(int pin, int freq);
-extern		void pwmSetMode		(int mode);
-extern		void pwmSetRange	(unsigned int range);
-extern		void pwmSetClock	(int divisor);
-extern		void gpioClockSet	(int pin, int freq);
-extern unsigned int  digitalReadByte	(void);
-extern unsigned int  digitalReadByte2	(void);
-extern		void digitalWriteByte	(int value);
-extern		void digitalWriteByte2	(int value);
+extern		void pinModeAlt		(int pin, int mode) UNU;
+extern		void analogWrite	(int pin, int value) UNU;
+extern		void pwmToneWrite	(int pin, int freq) UNU;
+extern		void pwmSetMode		(int mode) UNU;
+extern		void pwmSetRange	(unsigned int range) UNU;
+extern		void pwmSetClock	(int divisor) UNU;
+extern		void gpioClockSet	(int pin, int freq) UNU;
+extern unsigned int  digitalReadByte	(void) UNU;
+extern unsigned int  digitalReadByte2	(void) UNU;
+extern		void digitalWriteByte	(int value) UNU;
+extern		void digitalWriteByte2	(int value) UNU;
 
 // Interrupt
 extern		int  waitForInterrupt	(int pin, int mS);

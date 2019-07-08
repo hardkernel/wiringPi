@@ -296,7 +296,7 @@ static const char *physNamesOdroidN2 [64] =
 } ;
 
 /*----------------------------------------------------------------------------*/
-static void readallPhysOdroid (int model, int rev, int physPin, const char *physNames[])
+static void readallPhysOdroid (int model, int UNU rev, int physPin, const char *physNames[])
 {
 	int pin ;
 

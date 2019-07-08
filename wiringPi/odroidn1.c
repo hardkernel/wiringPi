@@ -266,7 +266,7 @@ static void setIomuxMode (int pin, int mode)
 static void _pinMode (int pin, int mode)
 {
 	int origPin, bank;
-	unsigned long flags;
+	unsigned long UNU flags;
 
 	if (lib->mode == MODE_GPIO_SYS)
 		return;
