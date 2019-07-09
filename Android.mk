@@ -75,7 +75,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := gpio
+LOCAL_MODULE    := gpiod
 LOCAL_SRC_FILES := \
     gpio/gpio.c    \
     gpio/readall.c \
