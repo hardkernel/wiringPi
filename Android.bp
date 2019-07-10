@@ -1,8 +1,13 @@
 cc_library_headers {
     name: "wiringPi-headers",
+    export_include_dirs: ["wiringPi"],
+
+    vendor_available: true,
+    host_supported: true,
 }
+
 cc_library_shared {
-    local_include_dirs: ["wiringPi"],
+    header_libs: ["wiringPi-headers"],
 
     name: "libwiringPi",
     srcs: [
@@ -57,7 +62,7 @@ cc_library_shared {
 }
 
 cc_library_shared {
-    local_include_dirs: ["wiringPi"],
+    header_libs: ["wiringPi-headers"],
 
     name: "libwiringPiDev",
     srcs: [
@@ -94,9 +99,9 @@ cc_binary {
         "gpio/readall.c",
         "gpio/pins.c",
     ],
+    header_libs: ["wiringPi-headers"],
 
     local_include_dirs: [
-        "wiringPi",
         "devLib",
     ],
 
