@@ -49,6 +49,8 @@ cc_library_shared {
         "wiringPi/wpiExtensions.c",
     ],
 
+    vendor_available: true,
+
     cflags: [
         "-UNDEBUG",
         "-DANDROID",
