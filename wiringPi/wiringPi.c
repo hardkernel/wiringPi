@@ -108,6 +108,14 @@ const int piMemorySize [8] =
 static volatile int    pinPass = -1 ;
 static pthread_mutex_t pinMutex ;
 
+/*----------------------------------------------------------------------------*/
+#ifdef __ANDROID__
+int pthread_cancel(pthread_t h) {
+    return pthread_kill(h, 0);
+}
+#endif /* __ANDROID__ */
+/*----------------------------------------------------------------------------*/
+
 // Debugging & Return codes
 int wiringPiDebug       = FALSE ;
 int wiringPiReturnCodes = FALSE ;
