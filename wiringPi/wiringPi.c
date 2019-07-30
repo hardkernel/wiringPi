@@ -678,6 +678,7 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 
 		sprintf (pinS, "%d", GpioPin) ;
 
+#ifndef __ANDROID__
 		if ((pid = fork ()) < 0)	// Fail
 			return wiringPiFailure (
 				WPI_FATAL,
@@ -707,6 +708,36 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 		}
 		else	// Parent, wait
 			wait (NULL) ;
+#else
+		FILE *export, *direct, *edge;
+		export = fopen("/sys/class/gpio/export", "w") ;
+		fprintf (export, "%d\n", GpioPin) ;
+		fclose (export) ;
+
+		char fDirection[64];
+		sprintf (fDirection, "/sys/class/gpio/gpio%d/direction", GpioPin) ;
+		while ((direct= fopen(fDirection, "w")) == NULL) {
+			sleep(1);
+		}
+		fprintf (direct, "in\n") ;
+		fclose (direct) ;
+
+		char fEdge[64];
+		sprintf (fEdge, "/sys/class/gpio/gpio%d/edge", GpioPin) ;
+		while ((edge= fopen(fEdge, "w")) == NULL) {
+			sleep(1);
+		}
+
+		if (mode  == INT_EDGE_FALLING)
+			fprintf (edge, "falling\n");
+		else if (mode  == INT_EDGE_RISING)
+			fprintf (edge, "rising\n");
+		else if (mode == INT_EDGE_BOTH)
+			fprintf (edge, "both\n");
+		else
+			fprintf (edge, "none\n");
+		fclose (edge) ;
+#endif
 	}
 
 	// Now pre-open the /sys/class node - but it may already be open if
