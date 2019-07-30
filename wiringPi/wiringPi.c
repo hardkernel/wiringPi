@@ -700,6 +700,15 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 					WPI_FATAL,
 					"wiringPiISR: execl failed: %s\n",
 					strerror (errno));
+#ifdef __ANDROID__
+			} else if (access("/system/bin/gpio", X_OK) == 0) {
+				execl ("/system/bin/gpio", "gpio", "edge",
+					pinS, modeS, (char *)NULL) ;
+				return wiringPiFailure (
+					WPI_FATAL,
+					"wiringPiISR: execl failed: %s\n",
+					strerror (errno));
+#endif
 			} else
 				return wiringPiFailure (
 					WPI_FATAL,
