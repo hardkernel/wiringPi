@@ -134,9 +134,14 @@ struct libodroid
 	int	(*pullUpDnControl)	(int pin, int pud);
 	int	(*digitalRead)		(int pin);
 	int	(*digitalWrite)		(int pin, int value);
+	void	(*pwmWrite)		(int pin, int value);
 	int	(*analogRead)		(int pin);
 	int	(*digitalWriteByte)	(const unsigned int value);
 	unsigned int (*digitalReadByte)	(void);
+
+	void (*pwmSetMode)	(int mode);
+	void (*pwmSetRange)	(unsigned int range);
+	void (*pwmSetClock)	(int divisor);
 
 	/* ISR Function pointer */
 	void 	(*isrFunctions[256])(void);

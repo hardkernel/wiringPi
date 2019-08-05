@@ -23,6 +23,7 @@
 
 /*----------------------------------------------------------------------------*/
 #include "wiringPi.h"
+#include "wiringPi_private.h"
 #include "odroidn1.h"
 
 /*----------------------------------------------------------------------------*/
@@ -667,6 +668,8 @@ static void init_gpio_mmap (void)
 				msg (MSG_ERR,
 					"wiringPiSetup: Unable to open /dev/gpiomem: %s\n",
 					strerror (errno));
+
+			setUsingGpioMem( TRUE );
 		} else
 			msg (MSG_ERR,
 				"wiringPiSetup: /dev/gpiomem doesn't exist. Please try again with sudo.\n");

@@ -30,6 +30,7 @@
 
 /*----------------------------------------------------------------------------*/
 #include "wiringPi.h"
+#include "wiringPi_private.h"
 #include "../version.h"
 
 #include "odroidc1.h"
@@ -125,6 +126,9 @@ extern void delay (unsigned int howLong) ;
 // ODROID Wiring Library
 struct libodroid	libwiring;
 
+unsigned int 	usingGpioMem	= FALSE;
+int 		wiringPiSetuped	= FALSE;
+
 /*----------------------------------------------------------------------------*/
 //
 // Return true/false if the supplied module is loaded
@@ -187,14 +191,10 @@ static void warn_msg(const char *func)
 //
 /*----------------------------------------------------------------------------*/
 static 	void UNU piGpioLayoutOops	(const char UNU *why)	{ warn_msg(__func__); return; }
-	void pwmSetMode		(int UNU mode)		{ warn_msg(__func__); return; }
-	void pwmSetRange	(unsigned int UNU range)	{ warn_msg(__func__); return; }
-	void pwmSetClock	(int UNU divisor)		{ warn_msg(__func__); return; }
 	void gpioClockSet	(int UNU pin, int UNU freq)	{ warn_msg(__func__); return; }
 
 	/* core unsupport function */
 	void pinModeAlt		(int UNU pin, int UNU mode)	{ warn_msg(__func__); return; }
-	void pwmWrite		(int UNU pin, int UNU value)	{ warn_msg(__func__); return; }
 	void analogWrite	(int UNU pin, int UNU value)	{ warn_msg(__func__); return; }
 	void pwmToneWrite	(int UNU pin, int UNU freq)	{ warn_msg(__func__); return; }
 	void digitalWriteByte2	(const int UNU value)	{ warn_msg(__func__); return; }
@@ -275,6 +275,43 @@ int wiringPiFailure (int fatal, const char *message, ...)
 	exit (EXIT_FAILURE);
 
 	return 0 ;
+}
+
+/*----------------------------------------------------------------------------*/
+/*
+ * setupCheck
+ *	Another sanity check because some users forget to call the setup
+ *	function. Mosty because they need feeding C drip by drip )-:
+ */
+/*----------------------------------------------------------------------------*/
+void setupCheck (const char *fName)
+{
+	if (!wiringPiSetuped) {
+		fprintf (stderr, "%s: You have not called one of the wiringPiSetup\n"
+		"  functions, so I'm aborting your program before it crashes anyway.\n", fName) ;
+		exit (EXIT_FAILURE) ;
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/*
+ * gpioMemCheck:
+ *	See if we're using the /dev/gpiomem interface, if-so then some operations
+ *	can't be done and will crash the Pi.
+ */
+/*----------------------------------------------------------------------------*/
+void usingGpioMemCheck (const char *what)
+{
+	if (usingGpioMem) {
+	fprintf (stderr, "%s: Unable to do this when using /dev/gpiomem. Try sudo?\n", what) ;
+	exit (EXIT_FAILURE) ;
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+void setUsingGpioMem( const unsigned int value )
+{
+	usingGpioMem = value;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -514,6 +551,57 @@ int getAlt (int pin)
 
 /*----------------------------------------------------------------------------*/
 /*
+ * pwmSetMode:
+ *	Select the native "balanced" mode, or standard mark:space mode
+ */
+/*----------------------------------------------------------------------------*/
+
+void pwmSetMode (int mode)
+{
+	if (libwiring.pwmSetMode) {
+		libwiring.pwmSetMode(mode);
+	} else {
+		warn_msg(__func__);
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/*
+ * pwmSetRange:
+ *	Set the PWM range register. We set both range registers to the same
+ *	value. If you want different in your own code, then write your own.
+ */
+/*----------------------------------------------------------------------------*/
+
+void pwmSetRange (unsigned int range)
+{
+	if (libwiring.pwmSetRange) {
+		libwiring.pwmSetRange(range);
+	} else {
+		warn_msg(__func__);
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/*
+ * pwmSetClock:
+ *	Set/Change the PWM clock. Originally my code, but changed
+ *	(for the better!) by Chris Hall, <chris@kchall.plus.com>
+ *	after further study of the manual and testing with a 'scope
+ */
+/*----------------------------------------------------------------------------*/
+
+void pwmSetClock (int divisor)
+{
+	if (libwiring.pwmSetClock) {
+		libwiring.pwmSetClock(divisor);
+	} else {
+		warn_msg(__func__);
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/*
  * getPUPD:
  *	Returns the PU/PD bits for a given port. Only really of-use
  *	for the gpio readall command (I think)
@@ -563,6 +651,15 @@ void digitalWrite (int pin, int value)
 	if (libwiring.digitalWrite)
 		if (libwiring.digitalWrite(pin, value) < 0)
 			msg(MSG_WARN, "%s: Not available for pin %d. \n", __func__, pin);
+}
+
+void pwmWrite(int pin, int value)
+{
+	if (libwiring.pwmWrite) {
+		libwiring.pwmWrite(pin, value);
+	} else {
+		warn_msg(__func__);
+	}
 }
 
 /*----------------------------------------------------------------------------*/
