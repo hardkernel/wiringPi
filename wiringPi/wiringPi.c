@@ -630,8 +630,15 @@ static void *interruptHandler (UNU void *arg)
 	pinPass = -1 ;
 
 	for (;;)
-		if (waitForInterrupt (myPin, -1) > 0)
+		if (waitForInterrupt (myPin, -1) > 0) {
+			pthread_mutex_lock (&pinMutex) ;
+			if (libwiring.isrFunctions[PIN_NUM_CALC_SYSFD(myPin)] == 0) {
+				pthread_mutex_unlock (&pinMutex) ;
+				break;
+			}
 			libwiring.isrFunctions [PIN_NUM_CALC_SYSFD(myPin)] () ;
+			pthread_mutex_unlock (&pinMutex) ;
+		}
 
 	return NULL ;
 }
@@ -767,8 +774,10 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 		delay (1) ;
 	pthread_mutex_unlock (&pinMutex) ;
 
+	pthread_mutex_lock (&pinMutex) ;
 	libwiring.isrFunctions [PIN_NUM_CALC_SYSFD(GpioPin)] = function ;
 	libwiring.isrThreadIds [PIN_NUM_CALC_SYSFD(GpioPin)] = threadId ;
+	pthread_mutex_unlock (&pinMutex) ;
 
 	return 0 ;
 }
@@ -799,8 +808,10 @@ int wiringPiISRCancel(int pin) {
 			"%s: wiringPiISRCancel: Unregister for the interrupt pin failed!\n",
 			__func__);
 	else {
+		pthread_mutex_lock (&pinMutex) ;
 		libwiring.isrFunctions[PIN_NUM_CALC_SYSFD(GpioPin)] = NULL;
 		libwiring.isrThreadIds[PIN_NUM_CALC_SYSFD(GpioPin)] = 0;
+		pthread_mutex_unlock (&pinMutex) ;
 	}
 
 	return 0;
