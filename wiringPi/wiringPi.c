@@ -1020,12 +1020,10 @@ void wiringPiVersion (int *major, char **minor)
 int wiringPiSetup (void)
 {
 	int i;
-	static int alreadyDoneThis = FALSE;
-
-	if (alreadyDoneThis)
+	if (wiringPiSetuped)
 		return 0;
 
-	alreadyDoneThis = TRUE;
+	wiringPiSetuped = TRUE;
 
 	// libwiring init
 	memset(&libwiring, 0x00, sizeof(struct libodroid));
