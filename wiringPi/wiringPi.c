@@ -30,7 +30,6 @@
 
 /*----------------------------------------------------------------------------*/
 #include "wiringPi.h"
-#include "wiringPi_private.h"
 #include "../version.h"
 
 #include "odroidc1.h"
@@ -656,7 +655,8 @@ void digitalWrite (int pin, int value)
 void pwmWrite(int pin, int value)
 {
 	if (libwiring.pwmWrite) {
-		libwiring.pwmWrite(pin, value);
+		if (libwiring.pwmWrite(pin, value) < 0)
+			msg(MSG_WARN, "%s: Not available for pin %d. \n", __func__, pin);
 	} else {
 		warn_msg(__func__);
 	}

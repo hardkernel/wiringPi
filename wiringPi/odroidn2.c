@@ -23,7 +23,6 @@
 
 /*----------------------------------------------------------------------------*/
 #include "wiringPi.h"
-#include "wiringPi_private.h"
 #include "odroidn2.h"
 
 /*----------------------------------------------------------------------------*/
@@ -202,7 +201,7 @@ static int		_getPUPD		(int pin);
 static int		_pullUpDnControl	(int pin, int pud);
 static int		_digitalRead		(int pin);
 static int		_digitalWrite		(int pin, int value);
-static void		_pwmWrite		(int pin, int value);
+static int		_pwmWrite		(int pin, int value);
 static int		_analogRead		(int pin);
 static int		_digitalWriteByte	(const unsigned int value);
 static unsigned int	_digitalReadByte	(void);
@@ -624,7 +623,7 @@ static int _digitalWrite (int pin, int value)
 }
 
 /*----------------------------------------------------------------------------*/
-static void _pwmWrite (int pin, int value)
+static int _pwmWrite (int pin, int value)
 {
 	/**
 	 * @todo Add node
@@ -634,10 +633,10 @@ static void _pwmWrite (int pin, int value)
 	setupCheck ("pwmWrite") ;
 
 	if (lib->mode == MODE_GPIO_SYS)
-		return;
+		return -1;
 
 	if ((pin = _getModeToGpio(lib->mode, pin)) < 0)
-		return;
+		return -1;
 
 	int pwm_pin	= gpioToPwmPin(pin);
 	uint16_t range	= pwmPinToRange[pwm_pin];
@@ -647,6 +646,8 @@ static void _pwmWrite (int pin, int value)
 	}
 
 	*(pwm[pwm_pin/2] + pwmPinToDutyOffset[pwm_pin]) = (value << 16) | (range - value);
+
+	return 0;
 }
 
 /*----------------------------------------------------------------------------*/
