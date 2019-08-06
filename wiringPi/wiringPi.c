@@ -105,7 +105,6 @@ const int piMemorySize [8] =
 
 /*----------------------------------------------------------------------------*/
 // Misc
-static volatile int    pinPass = -1 ;
 static pthread_mutex_t pinMutex ;
 
 /*----------------------------------------------------------------------------*/
@@ -620,14 +619,14 @@ int waitForInterrupt (int pin, int mS)
 }
 
 /*----------------------------------------------------------------------------*/
-static void *interruptHandler (UNU void *arg)
+static void *interruptHandler (void *arg)
 {
 	int myPin ;
 
 	(void)piHiPri (55) ;	// Only effective if we run as root
 
-	myPin   = pinPass ;
-	pinPass = -1 ;
+	myPin   = *((int *) arg);
+	free(arg);
 
 	for (;;)
 		if (waitForInterrupt (myPin, -1) > 0) {
@@ -768,10 +767,9 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 		}
 
 	pthread_mutex_lock (&pinMutex) ;
-	pinPass = GpioPin ;
-	pthread_create (&threadId, NULL, interruptHandler, NULL) ;
-	while (pinPass != -1)
-		delay (1) ;
+	int *pinNumber = malloc(sizeof(*pinNumber));
+	*pinNumber= GpioPin ;
+	pthread_create (&threadId, NULL, interruptHandler, pinNumber) ;
 	pthread_mutex_unlock (&pinMutex) ;
 
 	pthread_mutex_lock (&pinMutex) ;
