@@ -47,57 +47,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/ioctl.h>
+#include <linux/i2c.h>
+#include <linux/i2c-dev.h>
 
 #include "wiringPi.h"
 #include "wiringPiI2C.h"
 
-// I2C definitions
-
-#define I2C_SLAVE	0x0703
-#define I2C_SMBUS	0x0720	/* SMBus-level access */
-
-#define I2C_SMBUS_READ	1
-#define I2C_SMBUS_WRITE	0
-
-// SMBus transaction types
-
-#define I2C_SMBUS_QUICK		    0
-#define I2C_SMBUS_BYTE		    1
-#define I2C_SMBUS_BYTE_DATA	    2 
-#define I2C_SMBUS_WORD_DATA	    3
-#define I2C_SMBUS_PROC_CALL	    4
-#define I2C_SMBUS_BLOCK_DATA	    5
-#define I2C_SMBUS_I2C_BLOCK_BROKEN  6
-#define I2C_SMBUS_BLOCK_PROC_CALL   7		/* SMBus 2.0 */
-#define I2C_SMBUS_I2C_BLOCK_DATA    8
-
-// SMBus messages
-
-#define I2C_SMBUS_BLOCK_MAX	32	/* As specified in SMBus standard */	
-#define I2C_SMBUS_I2C_BLOCK_MAX	32	/* Not specified but we use same structure */
-
-// Structures used in the ioctl() calls
-
-union i2c_smbus_data
-{
-  uint8_t  byte ;
-  uint16_t word ;
-  uint8_t  block [I2C_SMBUS_BLOCK_MAX + 2] ;	// block [0] is used for length + one more for PEC
-} ;
-
-struct i2c_smbus_ioctl_data
-{
-  char read_write ;
-  uint8_t command ;
-  int size ;
-  union i2c_smbus_data *data ;
-} ;
+uint8_t fdToSlaveAddress[1024] = { 0xFF };
 
 static inline int i2c_smbus_access (int fd, char rw, uint8_t command, int size, union i2c_smbus_data *data)
 {
@@ -109,7 +70,6 @@ static inline int i2c_smbus_access (int fd, char rw, uint8_t command, int size, 
   args.data       = data ;
   return ioctl (fd, I2C_SMBUS, &args) ;
 }
-
 
 /*
  * wiringPiI2CRead:
@@ -130,7 +90,7 @@ int wiringPiI2CRead (int fd)
 
 /*
  * wiringPiI2CReadReg8: wiringPiI2CReadReg16:
- *	Read an 8 or 16-bit value from a regsiter on the device
+ *	Read an 8 or 16-bit value from a regisiter on the device
  *********************************************************************************
  */
 
@@ -152,6 +112,35 @@ int wiringPiI2CReadReg16 (int fd, int reg)
     return -1 ;
   else
     return data.word & 0xFFFF ;
+}
+
+
+/*
+ * wiringPiI2CReadBlock:
+ *	Read values from consecutive regisiters on the device
+ *********************************************************************************
+ */
+int wiringPiI2CReadBlock (int fd, int reg, uint8_t *buff, int size)
+{
+	struct i2c_rdwr_ioctl_data	i2c;
+	struct i2c_msg 			msgs[2];
+
+	uint8_t reg_addr[1] = { reg };
+
+	msgs[0].addr	= fdToSlaveAddress[fd];
+	msgs[0].flags	= 0;
+	msgs[0].len	= 1;
+	msgs[0].buf	= reg_addr;
+
+	msgs[1].addr	= fdToSlaveAddress[fd];
+	msgs[1].flags	= I2C_M_RD;
+	msgs[1].len	= size;
+	msgs[1].buf	= buff;
+
+	i2c.msgs	= msgs;
+	i2c.nmsgs	= 2;
+
+	return ioctl( fd, I2C_RDWR, &i2c );
 }
 
 
@@ -191,29 +180,57 @@ int wiringPiI2CWriteReg16 (int fd, int reg, int value)
 
 
 /*
+ * wiringPiI2CReadBlock:
+ *	Write values from consecutive regisiters on the device
+ *********************************************************************************
+ */
+int wiringPiI2CWriteBlock (int fd, int reg, uint8_t *buff, int size)
+{
+	uint8_t temp[50];
+	temp[0] = reg;
+	memcpy(&temp[1], buff, size);
+
+	struct i2c_rdwr_ioctl_data	i2c;
+	struct i2c_msg			msgs;
+
+	msgs.addr	= fdToSlaveAddress[fd];
+	msgs.flags	= 0;
+	msgs.len	= size + 1;
+	msgs.buf	= temp;
+
+	i2c.msgs	= &msgs;
+	i2c.nmsgs	= 1;
+
+	return ioctl( fd, I2C_RDWR, &i2c );
+}
+
+
+/*
  * wiringPiI2CSetupInterface:
- *	Undocumented access to set the interface explicitly - might be used
- *	for the Pi's 2nd I2C interface...
+ *	Open the I2C device, and regisiter the target device
  *********************************************************************************
  */
 
 int wiringPiI2CSetupInterface (const char *device, int devId)
 {
-  int fd ;
+	int fd;
+	if ((fd = open (device, O_RDWR)) < 0) {
+		return wiringPiFailure (WPI_ALMOST, "Unable to open I2C device: %s\n", strerror (errno)) ;
+	}
 
-  if ((fd = open (device, O_RDWR)) < 0)
-    return wiringPiFailure (WPI_ALMOST, "Unable to open I2C device: %s\n", strerror (errno)) ;
+	if (ioctl (fd, I2C_SLAVE, devId) < 0) {
+		return wiringPiFailure (WPI_ALMOST, "Unable to select I2C device: %s\n", strerror (errno)) ;
+	}
 
-  if (ioctl (fd, I2C_SLAVE, devId) < 0)
-    return wiringPiFailure (WPI_ALMOST, "Unable to select I2C device: %s\n", strerror (errno)) ;
+	fdToSlaveAddress[fd] = devId;
 
-  return fd ;
+	return fd ;
 }
 
 
 /*
  * wiringPiI2CSetup:
- *	Open the I2C device, and regsiter the target device
+ *	Open the I2C device, and regisiter the target device
  *********************************************************************************
  */
 
@@ -225,15 +242,16 @@ int wiringPiI2CSetup (const int devId)
 	piBoardId (&model, &rev, &mem, &maker, &overVolted) ;
 
 	switch(model)	{
-	case MODEL_ODROID_C1:	case MODEL_ODROID_C2:
+	case MODEL_ODROID_C1:
+	case MODEL_ODROID_C2:
+	case MODEL_ODROID_XU3:
 		device = "/dev/i2c-1";
 	break;
-	case MODEL_ODROID_XU3:
 	case MODEL_ODROID_N1:
 		device = "/dev/i2c-4";
 	break;
 	case MODEL_ODROID_N2:
-		device = "/dev/i2c-3";
+		device = "/dev/i2c-2";
 	break;
 	}
 
