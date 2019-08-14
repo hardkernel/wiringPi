@@ -485,6 +485,7 @@ static int _pinMode (int pin, int mode)
 		alt		= pwmPinToALT[pwm_pin];
 		*(gpio + mux)	= (*(gpio + mux) & ~(0xF << target)) | (alt << target);
 
+#ifndef ANDROID
 		/**
 		 * 24 MHz / 120
 		 * 200 kHz / 500
@@ -493,6 +494,7 @@ static int _pinMode (int pin, int mode)
 		 */
 		_pwmSetClock(120);
 		_pwmSetRange(500);
+#endif
 
 		break;
 	default:
