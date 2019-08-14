@@ -286,9 +286,18 @@ static int _pinMode (int pin, int mode)
 	switch (mode) {
 	case INPUT:
 		*(gpio[bank] + (N1_GPIO_CON_OFFSET >> 2)) &= ~(1 << gpioToShiftReg(pin));
+		_pullUpDnControl(origPin, PUD_OFF);
 		break;
 	case OUTPUT:
 		*(gpio[bank] + (N1_GPIO_CON_OFFSET >> 2)) |=  (1 << gpioToShiftReg(pin));
+		break;
+	case INPUT_PULLUP:
+		*(gpio[bank] + (N1_GPIO_CON_OFFSET >> 2)) &= ~(1 << gpioToShiftReg(pin));
+		_pullUpDnControl(origPin, PUD_UP);
+		break;
+	case INPUT_PULLDOWN:
+		*(gpio[bank] + (N1_GPIO_CON_OFFSET >> 2)) &= ~(1 << gpioToShiftReg(pin));
+		_pullUpDnControl(origPin, PUD_DOWN);
 		break;
 	case SOFT_PWM_OUTPUT:
 		softPwmCreate (origPin, 0, 100);

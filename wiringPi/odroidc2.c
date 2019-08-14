@@ -335,9 +335,18 @@ static int _pinMode (int pin, int mode)
 	switch (mode) {
 	case	INPUT:
 		*(gpio + fsel) = (*(gpio + fsel) |  (1 << shift));
+		_pullUpDnControl(origPin, PUD_OFF);
 		break;
 	case	OUTPUT:
 		*(gpio + fsel) = (*(gpio + fsel) & ~(1 << shift));
+		break;
+	case 	INPUT_PULLUP:
+		*(gpio + fsel) = (*(gpio + fsel) |  (1 << shift));
+		_pullUpDnControl(origPin, PUD_UP);
+		break;
+	case 	INPUT_PULLDOWN:
+		*(gpio + fsel) = (*(gpio + fsel) |  (1 << shift));
+		_pullUpDnControl(origPin, PUD_DOWN);
 		break;
 	case	SOFT_PWM_OUTPUT:
 		softPwmCreate (origPin, 0, 100);
