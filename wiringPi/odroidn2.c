@@ -633,6 +633,10 @@ static int _digitalWrite (int pin, int value)
 }
 
 /*----------------------------------------------------------------------------*/
+// PWM signal ___-----------___________---------------_______-----_
+//               <--value-->           <----value---->
+//               <-------range--------><-------range-------->
+/*----------------------------------------------------------------------------*/
 static int _pwmWrite (int pin, int value)
 {
 	/**
@@ -734,6 +738,11 @@ static int _digitalWriteByte (const unsigned int value)
 }
 
 /*----------------------------------------------------------------------------*/
+// PWM signal ___-----------___________---------------_______-----_
+//               <--value-->           <----value---->
+//               <-------range--------><-------range-------->
+// PWM frequency == (PWM clock) / range
+/*----------------------------------------------------------------------------*/
 static void _pwmSetRange (unsigned int range)
 {
 	range = range & 0xFFFF;
@@ -744,9 +753,19 @@ static void _pwmSetRange (unsigned int range)
 }
 
 /*----------------------------------------------------------------------------*/
+// Internal clock == 24MHz
+// PWM clock == (Internal clock) / divisor
+// PWM frequency == (PWM clock) / range
+/*----------------------------------------------------------------------------*/
 static void _pwmSetClock (int divisor)
 {
-	divisor = (divisor - 1) & 0x7F;
+	if((divisor < 1) || (divisor > 128))
+	{
+		msg(MSG_ERR,
+			"Set the clock prescaler (divisor) to 1 or more and 128 or less.: %s\n",
+			strerror (errno));
+	}
+	divisor = (divisor - 1);
 
 	for(uint16_t i = 1; i < 3; ++i) {
 		*( pwm[i] + N2_PWM_MISC_REG_01_OFFSET ) = \
