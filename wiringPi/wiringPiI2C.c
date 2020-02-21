@@ -53,7 +53,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/ioctl.h>
-
+#include <sys/stat.h>
 #include "wiringPi.h"
 #include "wiringPiI2C.h"
 
@@ -224,12 +224,17 @@ int wiringPiI2CSetup (const int devId)
 {
 	int model, rev, mem, maker, overVolted ;
 	const char *device = NULL;
+	struct stat buffer;
 
 	piBoardId (&model, &rev, &mem, &maker, &overVolted) ;
 
 	switch(model)	{
 	case MODEL_ODROID_C1:	case MODEL_ODROID_C2:
-		device = "/dev/i2c-1";
+		if (stat ("/dev/i2c-0", &buffer) == 0) {
+			device = "/dev/i2c-0";
+		} else {
+			device = "/dev/i2c-1";
+		}
 	break;
 	case MODEL_ODROID_XU3:
 	case MODEL_ODROID_N1:
