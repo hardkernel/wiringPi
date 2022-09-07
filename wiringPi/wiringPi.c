@@ -450,7 +450,6 @@ int piGpioLayout (void) {
 		for (i = 1; i <= sizeOfAssignedModelNames; i++) {
 			model = strstr(piModelNames[i], "-");
 
-			printf("modelCodename = %s\n", modelCodename);
 			if (strcmp(modelCodename, "xu3 board based on EXYNOS5422") == 0) {
 				// ODROID-XU3/4 Android kernel
 				modelCodename = "xu3/xu4";
