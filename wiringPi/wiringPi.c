@@ -894,6 +894,14 @@ int wiringPiISR (int pin, int mode, void (*function)(void))
 	if (mode != INT_EDGE_SETUP) {
 		sprintf (pinS, "%d", GpioPin) ;
 
+		char temp[64];
+		sprintf(temp, "/sys/class/gpio/gpio%d", GpioPin);
+		if (access(temp, F_OK) == 0) {
+			FILE *unexport = fopen("/sys/class/gpio/unexport", "w");
+			fprintf (unexport, "%d\n", GpioPin);
+			fclose(unexport);
+		}
+
 		FILE *export, *direct, *edge;
 		int count;
 
