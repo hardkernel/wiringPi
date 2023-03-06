@@ -1,3 +1,10 @@
+odroid-wiringpi (3.14.6) stable; urgency=medium
+
+  * ODROID-XU3/4: fix wiringPiISR.
+  * Fixed a phenomenon that gpio that was already exported when ringingPIISR was called was not unexported.
+
+ -- Steve Jeong <how2soft@gmail.com>  Mon, 06 Mar 2023 16:58:28 +0900
+
 odroid-wiringpi (3.14.5) stable; urgency=medium
 
   * change maintainer's e-mail and unify name style.
