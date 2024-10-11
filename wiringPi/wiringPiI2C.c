@@ -270,6 +270,8 @@ int wiringPiI2CSetup (const int devId)
 	case MODEL_ODROID_M1S:
 	case MODEL_ODROID_M2:
 		device = "/dev/i2c-0";
+	case MODEL_ODROID_C5:
+		device = "/dev/i2c-0";
 	break;
 	}
 

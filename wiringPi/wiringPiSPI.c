@@ -151,6 +151,7 @@ int wiringPiSPISetupMode (int channel, int speed, int mode)
 	case MODEL_ODROID_M1:
 	case MODEL_ODROID_M1S:
 	case MODEL_ODROID_M2:
+	case MODEL_ODROID_C5:
 		sprintf(device, "%s%d", spiDevType0, channel);
 	break;
 	case MODEL_ODROID_XU3:
