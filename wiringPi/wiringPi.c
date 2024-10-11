@@ -47,6 +47,7 @@
 #include "odroidc4.h"
 #include "odroidm1.h"
 #include "odroidm2.h"
+#include "odroidc5.h"
 
 /*----------------------------------------------------------------------------*/
 // Const string define
@@ -67,6 +68,7 @@ const char *piModelNames [16] =
 	"ODROID-M1",
 	"ODROID-M1S",
 	"ODROID-M2",
+	"ODROID-C5",
 };
 
 const char *piRevisionNames [16] =
@@ -551,6 +553,11 @@ int piGpioLayout (void) {
 			libwiring.mem = 5;
 			libwiring.rev = 1;
 			break;
+		case MODEL_ODROID_C5:
+			libwiring.maker = MAKER_AMLOGIC;
+			libwiring.mem = 4;
+			libwiring.rev = 1;
+		break;
 		case MODEL_UNKNOWN:
 		default:
 			libwiring.model = MAKER_UNKNOWN;
@@ -1278,6 +1285,9 @@ int wiringPiSetup (void)
 	break;
 	case MODEL_ODROID_M2:
 		init_odroidm2(&libwiring);
+	break;
+	case MODEL_ODROID_C5:
+		init_odroidc5(&libwiring);
 	break;
 	default:
 		return wiringPiFailure (WPI_ALMOST,

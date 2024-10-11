@@ -21,6 +21,7 @@ libwiringPi_la_SOURCES = \
 	odroidc1.c \
 	odroidc2.c \
 	odroidc4.c \
+	odroidc5.c \
 	odroidhc4.c \
 	odroidm1.c \
 	odroidm1s.c \

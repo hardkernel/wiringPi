@@ -1,3 +1,10 @@
+odroid-wiringpi (3.17.1) stable; urgency=medium
+
+  * ODROID-C5: New Support for ODROID-C5
+  * ODROID: Change binary installation path
+
+ -- Bob Shin <shinys000114@gmail.com>  Thu, 29 Oct 2024 06:07:00 +0000
+
 odroid-wiringpi (3.17.0) stable; urgency=medium
 
   * ODROID-M2: New Support for ODROID-M2
