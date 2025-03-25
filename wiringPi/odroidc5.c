@@ -83,7 +83,7 @@ static const char *pinToPwm[64] = {
 	// wiringPi number to pwm group number
 		"None", "None",		    //  0 |  1
 		"None", "None",			//  2 |  3
-		"None", "None",			//  4 |  5
+		"None", "fe058400",		//  4 |  5 :      , PWM_C
 		"fe058000", "fe058200",	//  6 |  7 : PWM_A, PWM_B
 		"None", "None",			//  8 |  9
 		"None", "fe058a00",		// 10 | 11 :      , PWM_F
@@ -96,7 +96,7 @@ static const char *pinToPwm[64] = {
 		"None", "None",			// 24 | 25
 		"None", "None",			// 26 | 27
 		"None", "None",			// 28 | 29
-		"None", "fe058400",		// 30 | 31 :     , PWM_C
+		"None", "None",		    // 30 | 31
 	// Padding:
 	"None","None","None","None","None","None","None","None","None","None","None","None","None","None","None","None", // 32...47
 	"None","None","None","None","None","None","None","None","None","None","None","None","None","None","None","None"  // 48...63
@@ -106,10 +106,10 @@ static const int pinToPwmNum[64] = {
 	// wiringPi number to pwm pin number
 	 -1, -1,	//  0 |  1
 	 -1, -1,	//  2 |  3
-	 -1, -1,	//  4 |  5
-	  0,  1,	//  6 |  7 : PWM_A, PWM_B
+	 -1,  0,	//  4 |  5 :      , PWM_C
+	  1,  2,	//  6 |  7 : PWM_A, PWM_B
 	 -1, -1,	//  8 |  9
-	 -1,  4,	// 10 | 11 :      , PWM_F
+	 -1,  3,	// 10 | 11 :      , PWM_F
 	 -1, -1,	// 12 | 13
 	 -1, -1,	// 14 | 15
 	 -1, -1,	// 16 | 17
@@ -119,7 +119,7 @@ static const int pinToPwmNum[64] = {
 	  1, -1,	// 24 | 25
 	 -1, -1,	// 26 | 27
 	 -1, -1,	// 28 | 29
-	 -1,  2,	// 30 | 31 :     , PWM_C
+	 -1, -1,	// 30 | 31
 	// Padding:
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,	// 32...47
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1	// 48...63
