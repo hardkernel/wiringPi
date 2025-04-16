@@ -759,7 +759,8 @@ static int _pwmWrite (int pin, int value)
 
 static int _analogRead (int pin)
 {
-	char value[5] = {0,};
+	char value[10] = {0,};
+	int n;
 
 	if (lib->mode == MODE_GPIO_SYS)
 		return	-1;
@@ -789,10 +790,13 @@ static int _analogRead (int pin)
 		return 0;
 
 	lseek (adcFds [pin], 0L, SEEK_SET);
-	if (read(adcFds [pin], &value[0], 4) < 0) {
+	n = read(adcFds [pin], &value[0], 10);
+	if (n < 0) {
 		msg(MSG_WARN, "%s: Error occurs when it reads from ADC file descriptor. \n", __func__);
 		return -1;
 	}
+
+	value[n] = 0;
 
 	return	atoi(value);
 }
