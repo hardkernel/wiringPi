@@ -104,10 +104,10 @@ static const char *pinToPwm[64] = {
 
 static const int pinToPwmNum[64] = {
 	// wiringPi number to pwm pin number
-	 -1, -1,	//  0 |  1
+	 -1,  1,	//  0 |  1
 	 -1, -1,	//  2 |  3
 	 -1,  0,	//  4 |  5 :      , PWM_C
-	  1,  2,	//  6 |  7 : PWM_A, PWM_B
+	 -1,  2,	//  6 |  7 : PWM_A, PWM_B
 	 -1, -1,	//  8 |  9
 	 -1,  3,	// 10 | 11 :      , PWM_F
 	 -1, -1,	// 12 | 13
