@@ -786,7 +786,7 @@ static const char *physNamesOdroidC5All [64] =
 	"    3.3V", "5V      ",
 	"   SDA.0", "5V      ",
 	"   SCL.0", "GND(0V) ",
-	"GPIOX_17", "TxD.0   ",
+	" GPIOD_4", "TxD.0   ",
 	" GND(0V)", "RxD.0   ",
 	" GPIOX_5", "GPIOX_6 ",
 	"GPIOX_15", "GND(0V) ",
