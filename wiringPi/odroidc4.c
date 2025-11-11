@@ -616,7 +616,7 @@ static int _getPUPD (int pin)
 	shift = gpioToShiftReg(pin);
 
 	if (*(gpio + puen) & (1 << shift))
-		return *(gpio + pupd) & (1 << shift) ? 1 : 2;
+		return *(gpio + pupd) & (1 << shift) ? 2 : 1;
 	else
 		return 0;
 }
