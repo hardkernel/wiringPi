@@ -1,2 +1,2 @@
 # /dev/gpiomem
-SUBSYSTEM=="aml-gpiomem", GROUP="odroid", MODE="0660"
+SUBSYSTEM=="aml-gpiomem", GROUP="gpio", MODE="0660"
