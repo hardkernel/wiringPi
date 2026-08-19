@@ -1,2 +1,2 @@
 # Allow members of the odroid group change permission of wpi
-%odroid ALL = (ALL) NOPASSWD: /usr/bin/sh /etc/odroid-allowuser.sh*
+%odroid ALL = (ALL) NOPASSWD: /usr/bin/sh /etc/odroid-allowuser.sh *
