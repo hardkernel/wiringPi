@@ -1,7 +1,7 @@
 Source: odroid-wiringpi
 Section: electronics
 Priority: optional
-Maintainer: Deokgyu Yang <secugyu@gmail.com>, Steve Jeong <steve@how2flow.net>
+Maintainer: Youngsoo Shin <shinys000114@gmail.com>
 Standards-Version: 3.8.0
 Homepage: https://wiki.odroid.com
 Build-Depends: debhelper (>= 10),
